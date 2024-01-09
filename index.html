@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator</title>
+    <link rel="stylesheet" href="Style.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <h1 class="h1">JavaScript <br><span> Age Calculator</span></h1>
+        <div class="d1">
+            <input class="i1" type="date" id="birthdate">
+
+            <button class="b1" onclick="calculateAndDisplayAge()">Calculate Age</button>
+        </div>
+
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function calculateAge(birthdate) {
+            const currentDate = new Date();
+            const birthDate = new Date(birthdate);
+
+            let ageYears = currentDate.getFullYear() - birthDate.getFullYear();
+
+            if (
+                currentDate.getMonth() < birthDate.getMonth() ||
+                (currentDate.getMonth() === birthDate.getMonth() &&
+                    currentDate.getDate() < birthDate.getDate())
+            ) {
+                ageYears--;
+            }
+
+            let ageMonths = currentDate.getMonth() - birthDate.getMonth();
+            if (ageMonths < 0) {
+                ageMonths += 12;
+            }
+
+            let ageDays = currentDate.getDate() - birthDate.getDate();
+            if (ageDays < 0) {
+                const lastDayOfMonth = new Date(
+                    currentDate.getFullYear(),
+                    currentDate.getMonth(),
+                    0
+                ).getDate();
+                ageDays += lastDayOfMonth;
+                ageMonths--;
+            }
+
+            return {
+                years: ageYears,
+                months: ageMonths,
+                days: ageDays,
+            };
+        }
+
+        function calculateAndDisplayAge() {
+            const birthdateInput = document.getElementById('birthdate');
+            const resultContainer = document.getElementById('result');
+
+            const birthdate = birthdateInput.value;
+            const age = calculateAge(birthdate);
+
+            // Display the result using innerHTML
+            resultContainer.innerHTML = `Age: <span>${age.years}</span> years,<span> ${age.months}</span> months, <span>${age.days}</span> days`;
+        }
+    </script>
+
+</body>
+
+`
